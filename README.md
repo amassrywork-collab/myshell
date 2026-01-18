@@ -1,158 +1,166 @@
-<help>
+# 🐚 myshell — UNIX Shell Project
 
- Ahmed Monir Almassri --- 120220138  
+**Operating Systems Project — Developing a Simple UNIX Shell**
 
-                                     *Operating Systems Project*
-                                        *Developing A SEHLL*
----------------------------------------------------------------------------------------------
+👤 **Author:** Ahmed Monir Almassri  
+🎓 **Student ID:** 120220138  
 
-1. INTRODUCTION
----------------
-myshell is a simple UNIX command line interpreter (shell).
-It provides a user interface to the operating system, allowing users to
-execute programs, manage directories, redirect input/output, and run
-processes in the background.
+---
 
-This shell is intended for educational purposes and implements a subset
-of standard shell functionality.
+## 📌 Overview
+`myshell` is a simple UNIX command-line interpreter developed as part of an
+Operating Systems course project.
 
+The shell provides a basic user interface to the operating system, allowing
+users to execute programs, manage directories, perform input/output
+redirection, and run processes in the background.
 
-2. INVOCATION
--------------
+This project is designed for **educational purposes** and implements a
+subset of standard shell functionality.
+
+---
+
+## 🚀 Invocation
+
 The shell can be started in two modes:
 
-2.1 Interactive Mode
-    myshell
+### 🔹 Interactive Mode
+```bash
+myshell
+The shell prompts the user for commands and executes them interactively.
+```
+### 🔹 Batch Mode
 
-    In this mode, the shell prompts the user for commands and executes
-    them interactively.
+```bash
+myshell batchfile
+```
 
-2.2 Batch Mode
-    myshell batchfile
+Commands are read line-by-line from `batchfile`.
+When end-of-file is reached, the shell exits automatically.
 
-    In this mode, the shell reads commands line by line from the specified
-    batch file and executes them. When the end of the file is reached,
-    the shell terminates.
+---
 
+## 🧾 Command Line Format
 
-3. COMMAND LINE FORMAT
-----------------------
-A command line consists of a command name followed by arguments, separated
-by spaces or tabs.
-
-Example:
-    ls -l /home
-
-All special symbols (<, >, >>, &) must be separated from other tokens by
-whitespace.
-
-
-4. INTERNAL COMMANDS
--------------------
-
-4.1 cd <directory>
-    Changes the current working directory to <directory>.
-    If no directory is specified, the current directory is displayed.
-    The PWD environment variable is updated accordingly.
-
-4.2 clr
-    Clears the terminal screen.
-
-4.3 dir <directory>
-    Lists the contents of the specified directory.
-    If no directory is specified, the current directory is listed.
-
-4.4 environ
-    Displays all environment variables.
-
-4.5 echo <comment>
-    Displays <comment> on the screen followed by a newline.
-    Multiple spaces and tabs may be reduced to a single space.
-
-4.6 help
-    Displays this manual using a paging filter.
-
-4.7 pause
-    Pauses shell execution until the Enter key is pressed.
-
-4.8 quit
-    Terminates the shell.
-
-
-5. PROGRAM EXECUTION
--------------------
-Any command that is not an internal command is treated as an external
-program. The shell creates a child process using fork() and executes the
-program using exec().
-
-All programs are executed with an environment that contains:
-    parent=<pathname>/myshell
-
-where <pathname>/myshell is the full path of the shell executable.
-
-
-6. I/O REDIRECTION
-------------------
-The shell supports input and output redirection.
-
-6.1 Input Redirection
-    command < inputfile
-
-    Replaces standard input with inputfile.
-
-6.2 Output Redirection
-    command > outputfile
-
-    Redirects standard output to outputfile.
-    If outputfile exists, it is truncated.
-    If it does not exist, it is created.
-
-6.3 Output Append
-    command >> outputfile
-
-    Redirects standard output to outputfile.
-    If outputfile exists, output is appended.
-    If it does not exist, it is created.
-
-Output redirection is also supported for the internal commands:
-    dir, environ, echo, and help.
-
-
-7. BACKGROUND EXECUTION
-----------------------
-Commands can be executed in the background by appending an ampersand (&)
-at the end of the command line.
+A command consists of a command name followed by arguments, separated by
+spaces or tabs.
 
 Example:
-    sleep 10 &
 
-The shell returns immediately to the command prompt after launching the
-program.
+```bash
+ls -l /home
+```
 
+⚠️ Special symbols (`<`, `>`, `>>`, `&`) must be separated by whitespace.
 
-8. ENVIRONMENT VARIABLES
-------------------------
-The shell sets the following environment variables:
+---
 
-- shell
-  Contains the full path of the myshell executable.
+## 🛠️ Internal Commands
 
-- parent
-  Set for child processes and contains the full path of myshell.
+| Command           | Description                                                             |
+| ----------------- | ----------------------------------------------------------------------- |
+| `cd <directory>`  | Change current directory (prints current if none given). Updates `PWD`. |
+| `clr`             | Clear the terminal screen.                                              |
+| `dir <directory>` | List contents of a directory.                                           |
+| `environ`         | Display all environment variables.                                      |
+| `echo <comment>`  | Display text (multiple spaces may be reduced).                          |
+| `help`            | Display the user manual using a paging filter.                          |
+| `pause`           | Pause execution until Enter is pressed.                                 |
+| `quit`            | Exit the shell.                                                         |
 
+---
 
-9. ERROR HANDLING
------------------
-If a command cannot be executed, an appropriate error message is displayed.
-Invalid commands, missing files, or invalid directories are reported to
-the user.
+## ▶️ Program Execution
 
+Commands that are not internal are treated as **external programs**.
 
-10. NOTES
----------
-- All command line tokens must be separated by whitespace.
-- Pipes and command chaining are not supported.
-- Quoted strings are not supported.
+The shell:
 
+* Creates a child process using `fork()`
+* Executes the program using `exec()`
 
-END OF MANUAL
+Each child process is executed with an environment variable:
+
+```text
+parent=<pathname>/myshell
+```
+
+---
+
+## 🔁 I/O Redirection
+
+### Input Redirection
+
+```bash
+command < inputfile
+```
+
+### Output Redirection
+
+```bash
+command > outputfile
+```
+
+* Creates file if it does not exist
+* Truncates file if it exists
+
+### Output Append
+
+```bash
+command >> outputfile
+```
+
+* Appends output if file exists
+
+✅ Output redirection is also supported for:
+`dir`, `environ`, `echo`, and `help`
+
+---
+
+## ⏱️ Background Execution
+
+Commands can be executed in the background using `&`:
+
+```bash
+sleep 10 &
+```
+
+The shell immediately returns to the prompt without waiting for completion.
+
+---
+
+## 🌍 Environment Variables
+
+The shell sets the following variables:
+
+* **`shell`**
+  Full path of the `myshell` executable.
+
+* **`parent`**
+  Set for child processes; contains full path of `myshell`.
+
+---
+
+## ❗ Error Handling
+
+If a command fails to execute, an appropriate error message is displayed.
+Common errors include:
+
+* Invalid commands
+* Missing files
+* Invalid directories
+
+---
+
+## 📝 Notes
+
+* All command-line tokens must be separated by whitespace.
+* Pipes (`|`) and command chaining (`;`) are **not supported**.
+* Quoted strings are **not supported**.
+
+---
+
+## 📚 License
+
+This project is intended for educational use as part of an academic course.
+
